@@ -1,3 +1,5 @@
+<!-- tags like mat-toolbar is how angular compnents are being pulled into the template/application -->
+<!-- this is how the components will render -->
 <mat-toolbar color="primary" class="mat-elevation-z4">
   <span>
     <button mat-mini-fab (click)="sidenav?.toggle()">
@@ -22,6 +24,7 @@
   </mat-sidenav>
   
   <div class="container">
+    <!-- router-outlet is basically an angular component that receives a dynamic component and renders it -->
     <router-outlet></router-outlet>
   </div>
   </mat-sidenav-container>

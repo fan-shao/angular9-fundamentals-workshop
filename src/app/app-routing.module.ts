@@ -5,6 +5,8 @@ import { CoursesComponent } from './courses/courses.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  // path home is assigned component called HomeComponent, which is going to be put into the router outlet
+  // this is an object
   { path: 'home', component: HomeComponent },
   { path: 'courses', component: CoursesComponent },
   { path: '**', redirectTo: '/home' }

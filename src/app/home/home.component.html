@@ -1,12 +1,35 @@
 <mat-card>
     <mat-card-header>
       <mat-card-title>
-        Course Outline
+        <!-- can add bindings here -->
+        {{title}}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-
-      <!-- LESSON LIST -->
-      
+      <mat-list>
+          <mat-list-item *ngFor="let lesson of courseLessons" (click)="selectLesson(lesson)">
+              {{lesson.title}}
+          </mat-list-item>
+      </mat-list>
+    
     </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+      <mat-card-header>
+          <mat-card-title>Debug</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- the if statement says if currentLesson is truthy, then display, this is implicit -->
+        <!-- if currentLesson exists, show then, else render the elseBlock -->
+        <!-- * is syntactic sugar for ngdirective tags -->
+        <!-- under the hood there's prop binding -->
+         <span *ngIf="currentLesson; else elseBlock">{{ currentLesson | json}}</span>
+         <!-- working with the else block here -->
+         <!-- # declares local template variable -->
+         <!-- this dom el can be referenced in the rest of the template -->
+         <!-- i am creating a dom el and assigning to variable elseBlock -->
+         <ng-template #elseBlock>Select a Lesson</ng-template>
+         
+      </mat-card-content>
   </mat-card>
