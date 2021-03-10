@@ -11,7 +11,12 @@ import { MaterialModule } from './material.module';
 import { HomeComponent } from './home/home.component';
 import { CoursesComponent } from './courses/courses.component';
 // my imports
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { CoursesService } from './shared/services/courses.service';
+import { LessonsService } from './shared/services/lessons.service';
+
+// declarations are for components
+// providers are for services
 
 // this module defines the configuration of angular, framework level
 // we need to tell angular here how to put the app together in a way to have it be performant
@@ -23,15 +28,11 @@ import { FormsModule } from '@angular/forms'
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    CoursesComponent,
-  ],
-  providers: [],
+  declarations: [AppComponent, HomeComponent, CoursesComponent],
+  providers: [CoursesService, LessonsService],
   // this component tells you what main component you want to render?
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

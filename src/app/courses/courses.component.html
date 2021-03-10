@@ -58,7 +58,7 @@
         the submit handler can be added directly to the form handler
         ngModel is bound to individual props of selected course
     -->
-      <form #form="ngForm" (submit)="saveCourse()">
+      <form #form="ngForm" (submit)="saveCourse(selectedCourse)">
         <!-- i originally put the ngif in here, but they put it in the pre tag instead. i guess you want it to act the most direct on the tag you want to manipulate -->
         <mat-card-content>
           <!-- mat form field is angular material mechanism -->
