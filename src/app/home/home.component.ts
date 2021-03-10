@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   // ];
 
   courseLessons = null;
+  // sampleArr = this.lessonsService.all();
 
   // method 1
   // if private is taken off of lesson service, then the arg doesn't exist in the home component

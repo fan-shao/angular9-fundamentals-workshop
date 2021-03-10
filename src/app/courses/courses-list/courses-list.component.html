@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> Course List </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <!-- loop and display courses in courselist -->
+      <!-- COURSES LIST -->
+      <!-- when someone clicks on an element, he doesn't want to handle it in the child component, want to delegate it up -->
+      <!-- can delegate these events up to parent using outputs -->
+      <!-- this is what the mat list item looked like before:
+        <mat-list-item
+        *ngFor="let course of courses"
+        (click)="selectCourse(course)"
+      >
+     -->
+      <!-- this is what it looks like now, we changed the function -->
+      <mat-list-item
+        *ngFor="let course of courses"
+        (click)="selected.emit(course)"
+      >
+        <!-- all of this is now going to be converted into a form -->
+        <!-- import module for reactive forms, or template forms -->
+        <!-- matline is in the docs -->
+        <h3 matLine>{{ course.title }}</h3>
+        <p matLine>{{ course.description }}</p>
+        <!-- want to also give ability to delete course -->
+        <!-- the only info needed is the id -->
+        <!-- even though the button is clicked and it's supposed to be deleted, the event propogates up and the deleted values still display -->
+        <!-- we can write more than one function -->
+        <!-- event.stopImmediatePropagation prevents the events from bubbling -->
+
+        <!-- same thing happens here with the delete and the event emitter
+           <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteCourse(course.id); $event.stopImmediatePropagation()"
+        >
+         -->
+        <!-- the emit events are coing from the course-list ts file -->
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleted.emit(course.id); $event.stopImmediatePropagation()"
+        >
+          <mat-icon class="mat-18">Delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

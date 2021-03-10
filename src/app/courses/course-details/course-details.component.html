@@ -1,0 +1,100 @@
+<mat-card>
+  <mat-card-header>
+    <!-- if there is a selected course then we will show it -->\
+    <!-- before the ngif was selecting selectedCourse, after we separated the logic, we want to access the child prop -->
+    <!-- i've been checking course, not course.id the entire, wtf, how come it was still working?? -->
+    <!-- over hwere it used to be course.id and course.title, but they are coupled to each other, so he broke them apart so they don't share the data anymore, even though they are getting info from the same place -->
+    <span *ngIf="selectedCourse.id; else noSelection">{{ originalTitle }}</span>
+    <mat-card-title>
+      <ng-template #noSelection>Select Course</ng-template>
+    </mat-card-title>
+  </mat-card-header>
+
+  <!-- card content and card actions are going to be wrapped in a form -->
+  <!-- create local template called form -->
+  <!-- under the hood, angular is creating a form control to monitor what is happening to the form-->
+  <!-- TAKEAWAYS: 
+    when angular sees a form, it will do certain things under the hood, such as creating a form controller that will keep track of things for you
+    also checks to see if form is in a valid state
+    the submit handler can be added directly to the form handler
+    ngModel is bound to individual props of selected course
+-->
+
+  <!-- instead of saveCourse, we will access save -->
+  <!-- and instead of selectedCourse being passed in, we passed in course -->
+  <form #form="ngForm" (submit)="saved.emit(selectedCourse)">
+    <!-- i originally put the ngif in here, but they put it in the pre tag instead. i guess you want it to act the most direct on the tag you want to manipulate -->
+    <mat-card-content>
+      <!-- mat form field is angular material mechanism -->
+      <!-- bind ngmodel to the current course title -->
+      <!-- mat form field is really designed for text fields -->
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="title"
+          [(ngModel)]="selectedCourse.title"
+          name="title"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="description"
+          [(ngModel)]="selectedCourse.description"
+          name="description"
+        />
+      </mat-form-field>
+      <section>
+        <h4>{{ selectedCourse.percentComplete }} % Complete</h4>
+        <mat-slider
+          class="full-width"
+          name="percentComplete"
+          [(ngModel)]="selectedCourse.percentComplete"
+          min="1"
+          max="100"
+          thumbLabel
+        ></mat-slider>
+      </section>
+      <section>
+        <mat-checkbox
+          [(ngModel)]="selectedCourse.favorite"
+          value="favorite"
+          color="primary"
+          name="favorite"
+          >Favorite</mat-checkbox
+        >
+      </section>
+      <!-- 
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="favorite"
+          [(ngModel)]="selectedCourse.favorite"
+          name="favorite"
+        />
+      </mat-form-field> -->
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button" mat-button (click)="cancelled.emit()">
+        Cancel
+      </button>
+      <!-- there is a submit dom event that we can bind to instead of the click event -->
+      <!-- if form is invalid, we don't want the user to submit the form -->
+      <button
+        [disabled]="form.invalid"
+        type="submit"
+        mat-button
+        color="primary"
+      >
+        Submit
+      </button>
+      <!-- COURSE ACTIONS -->
+    </mat-card-actions>
+  </form>
+  <pre>{{ form.value | json }}</pre>
+  <pre>{{ form.valid | json }}</pre>
+</mat-card>

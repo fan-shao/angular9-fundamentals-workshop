@@ -1,137 +1,25 @@
 <div class="courses-containers">
   <div class="courses-list">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title> Course List </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <!-- loop and display courses in courselist -->
-          <!-- COURSES LIST -->
-          <mat-list-item
-            *ngFor="let course of courses"
-            (click)="selectCourse(course)"
-          >
-            <!-- all of this is now going to be converted into a form -->
-            <!-- import module for reactive forms, or template forms -->
-            <!-- matline is in the docs -->
-            <h3 matLine>{{ course.title }}</h3>
-            <p matLine>{{ course.description }}</p>
-            <!-- want to also give ability to delete course -->
-            <!-- the only info needed is the id -->
-            <!-- even though the button is clicked and it's supposed to be deleted, the event propogates up and the deleted values still display -->
-            <!-- we can write more than one function -->
-            <!-- event.stopImmediatePropagation prevents the events from bubbling -->
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="
-                deleteCourse(course.id); $event.stopImmediatePropagation()
-              "
-            >
-              <mat-icon class="mat-18">Delete</mat-icon>
-            </button>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+    <!-- we want to be able to pass the courses down to this child -->
+    <!-- courses is available as an attribute -->
+    <!-- we added emitters in the child template -->
+    <!-- we basically wrote our own event, so we can declare that -->
+    <!-- selected is the event from the child, and we want to bind it i guess to the function in the parent -->
+    <!-- when you're binding to an output, it has a single param, which is an event object -->
+    <!-- in the component class it can be called anything, but in the template, it must be called event, mapping happens under the hood -->
+    <app-courses-list
+      [courses]="courses"
+      (selected)="selectCourse($event)"
+      (deleted)="deleteCourse($event)"
+    ></app-courses-list>
   </div>
 
   <div class="course-details">
-    <mat-card>
-      <mat-card-header>
-        <!-- if there is a selected course then we will show it -->
-        <span *ngIf="selectedCourse; else noSelection">{{
-          selectedCourse.title
-        }}</span>
-        <mat-card-title>
-          <ng-template #noSelection>Select Course</ng-template>
-        </mat-card-title>
-      </mat-card-header>
-
-      <!-- card content and card actions are going to be wrapped in a form -->
-      <!-- create local template called form -->
-      <!-- under the hood, angular is creating a form control to monitor what is happening to the form-->
-      <!-- TAKEAWAYS: 
-        when angular sees a form, it will do certain things under the hood, such as creating a form controller that will keep track of things for you
-        also checks to see if form is in a valid state
-        the submit handler can be added directly to the form handler
-        ngModel is bound to individual props of selected course
-    -->
-      <form #form="ngForm" (submit)="saveCourse(selectedCourse)">
-        <!-- i originally put the ngif in here, but they put it in the pre tag instead. i guess you want it to act the most direct on the tag you want to manipulate -->
-        <mat-card-content>
-          <!-- mat form field is angular material mechanism -->
-          <!-- bind ngmodel to the current course title -->
-          <!-- mat form field is really designed for text fields -->
-          <mat-form-field>
-            <input
-              type="text"
-              matInput
-              placeholder="title"
-              [(ngModel)]="selectedCourse.title"
-              name="title"
-              required
-            />
-          </mat-form-field>
-          <mat-form-field>
-            <input
-              type="text"
-              matInput
-              placeholder="description"
-              [(ngModel)]="selectedCourse.description"
-              name="description"
-            />
-          </mat-form-field>
-          <section>
-            <h4>{{ selectedCourse.percentComplete }} % Complete</h4>
-            <mat-slider
-              class="full-width"
-              name="percentComplete"
-              [(ngModel)]="selectedCourse.percentComplete"
-              min="1"
-              max="100"
-              thumbLabel
-            ></mat-slider>
-          </section>
-          <section>
-            <mat-checkbox
-              [(ngModel)]="selectedCourse.favorite"
-              value="favorite"
-              color="primary"
-              name="favorite"
-              >Favorite</mat-checkbox
-            >
-          </section>
-          <!-- 
-          <mat-form-field>
-            <input
-              type="text"
-              matInput
-              placeholder="favorite"
-              [(ngModel)]="selectedCourse.favorite"
-              name="favorite"
-            />
-          </mat-form-field> -->
-        </mat-card-content>
-        <mat-card-actions>
-          <button type="button" mat-button (click)="cancel()">Cancel</button>
-          <!-- there is a submit dom event that we can bind to instead of the click event -->
-          <!-- if form is invalid, we don't want the user to submit the form -->
-          <button
-            [disabled]="form.invalid"
-            type="submit"
-            mat-button
-            color="primary"
-          >
-            Submit
-          </button>
-          <!-- COURSE ACTIONS -->
-        </mat-card-actions>
-      </form>
-      <pre>{{ form.value | json }}</pre>
-      <pre>{{ form.valid | json }}</pre>
-    </mat-card>
+    <app-course-details
+      [course]="selectedCourse"
+      (saved)="saveCourse($event)"
+      (cancelled)="cancel()"
+    ></app-course-details>
   </div>
 </div>
 
