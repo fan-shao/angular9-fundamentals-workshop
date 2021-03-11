@@ -17,6 +17,7 @@ import { LessonsService } from './shared/services/lessons.service';
 import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { CourseDetailsComponent } from './courses/course-details/course-details.component';
 import { LessonsListComponent } from './courses/lessons/lessons-list/lessons-list.component';
+import { UsersComponent } from './users/users.component';
 
 // declarations are for components
 // providers are for services
@@ -40,6 +41,7 @@ import { LessonsListComponent } from './courses/lessons/lessons-list/lessons-lis
     CoursesListComponent,
     CourseDetailsComponent,
     LessonsListComponent,
+    UsersComponent,
   ],
   providers: [CoursesService, LessonsService],
   // this component tells you what main component you want to render?

@@ -36,6 +36,8 @@ export class CoursesComponent implements OnInit {
   // you have no control over when to initialize, it's harder to test
   // the course services component is going to be injected in here
   // dependency injection happens in the constructor as a param
+
+  // for testing, here we are pulling courses service, which has dependency on http client. this component depends on a service, which depends on another service.
   constructor(private coursesService: CoursesService) {}
 
   // this is the most common lifecycle hook

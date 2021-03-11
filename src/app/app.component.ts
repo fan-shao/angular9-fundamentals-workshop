@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 // this is the metadata, this is part of typescript and not angular
 // metadata are decorators
@@ -8,15 +9,22 @@ import { Component } from '@angular/core';
   // attaches component to the dom
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-
 export class AppComponent {
   title = 'Angular 9 Fundamentals';
   links = [
     { path: '/home', icon: 'home', title: 'Home' },
     { path: '/courses', icon: 'view_list', title: 'Courses' },
+    { path: '/users', icon: 'person', title: 'Users' },
   ];
 
-  constructor() {}
+  // 2. import router url
+  constructor(private router: Router) {}
+
+  // 1. use router service here to navigate to a new url
+  // 3. now
+  logout() {
+    this.router.navigateByUrl('/login');
+  }
 }
